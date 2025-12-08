@@ -1,0 +1,73 @@
+name: archetype-battle
+services:
+  nodejs:
+    container_name: back-ab
+    build:
+      dockerfile: ./docker/Dockerfile.dev
+    working_dir: /usr/src/
+    environment:
+      - NODE_ENV=development
+      - FRONTEND_URL=http://localhost:8888
+      - API_PORT=3005
+      - DATABASE_CLIENT=postgres
+      - DATABASE_HOST=database
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=ab
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=Azerty123!
+      # - API_PORT=3005
+      # - DATABASE_CLIENT=postgres
+      # - DATABASE_HOST=dpg-d3vs35i4d50c73e4pop0-a
+      # - DATABASE_PORT=5432
+      # - DATABASE_NAME=aw_8vps
+      # - DATABASE_USER=admin
+      # - DATABASE_PASSWORD=uSZjynA29y8Krk78D3i7EwT5KmSNPZbI
+      - DATABASE_SSL=false
+      - API_TOKEN_SALT=baATgxx9waBHIYkwv87lWg==
+      - JWT_SECRET=SOTYvW+Ed63I2iCfehnBbg==
+      - EMAIL_FROM_EMAILSENDER=timothegauquelin@gmail.com
+      - PASSWORD_FROM_EMAILSENDER=cpygwfgxyvyaumps
+      - CLOUDINARY_CLOUD_NAME=dqfuwqmql
+      - CLOUDINARY_API_KEY=797713558548426
+      - CLOUDINARY_API_SECRET=a9ct3UXKhQ3fECdRgUufmP0Mcv0
+    volumes:
+      - ./config:/usr/src/config
+      - ./database:/usr/src/database
+      - ./public:/usr/src/public
+      - ./src:/usr/src/src
+      - ./tsconfig.json:/usr/src/tsconfig.json
+      - ./package.json:/usr/src/package.json
+    networks:
+      - network-project-ab
+    ports:
+      - '8889:3005'
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    container_name: database-ab
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Azerty123!
+      POSTGRES_DB: ab
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker-init:/docker-entrypoint-initdb.d
+    networks:
+      - network-project-ab
+    ports:
+      - '8899:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d ab"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+networks:
+  network-project-ab:
+    name: network-project-ab
+
+volumes:
+  pgdata:

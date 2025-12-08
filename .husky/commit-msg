@@ -1,0 +1,15 @@
+commit_msg=$(cat "$1")
+
+first_line=$(echo "$commit_msg" | head -n1)
+length=${#first_line}
+
+if [ "$length" -gt 100 ]; then
+  echo "❌ Error: The commit message exceeds 100 characters"
+  echo "Current length: $length characters"
+  echo "Message : $first_line"
+  exit 1
+fi
+
+echo "✅ Commit message valid ($length characters)"
+
+

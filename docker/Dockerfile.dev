@@ -1,0 +1,12 @@
+FROM node:22-alpine AS builder
+
+WORKDIR /usr/src/
+
+COPY package*.json ./
+
+RUN npm install --silent --legacy-peer-deps
+
+COPY tsconfig.json ./
+COPY nodemon.json ./
+
+CMD ["npm", "run", "dev"] 
