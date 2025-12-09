@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', apiRouter);
 
-apiRouter.use('/auth', authRoutes);
+apiRouter.use('/authenticate', authRoutes);
 
 app.get('/health', (_req, res) => {
   res.status(200).json({ message: 'API is running', status: 'ok' });

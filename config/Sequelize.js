@@ -37,7 +37,7 @@ const config = {
     },
 };
 
-const pool = new Sequelize(
+const sequelize = new Sequelize(
     config[env].database,
     config[env].username,
     config[env].password,
@@ -68,7 +68,7 @@ const pool = new Sequelize(
 const connectDatabase = async (retries = 5, delay = 2000) => {
     for (let i = 0; i < retries; i++) {
         try {
-            await pool.authenticate();
+            await sequelize.authenticate();
             console.log(`Connection to the database ${config[env].database} on port ${config[env].port} established successfully.`);
             return;
         } catch (err) {
@@ -82,4 +82,5 @@ const connectDatabase = async (retries = 5, delay = 2000) => {
     }
 }
 
+export default sequelize;
 export { config, connectDatabase };

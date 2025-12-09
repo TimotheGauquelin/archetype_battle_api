@@ -1,7 +1,9 @@
-import { Model } from 'sequelize';
+import { Transaction } from 'sequelize';
 import { Role, User } from '../../models';
-import { UserDto } from '../../dto/user/User.dto';
+import { UserDto, UserModel } from '../../dto/user/User.dto';
 import { IUserRepository } from '../interfaces/IUserRepository';
+import { RegisterRequest } from '../../dto/auth/Register.dto';
+import { mapUserModelToUserDto } from '../../map/user';
 
 export class UserRepository implements IUserRepository {
 
@@ -24,7 +26,7 @@ export class UserRepository implements IUserRepository {
       return null;
     }
 
-    return this.mapToDto(user);
+    return mapUserModelToUserDto(user as unknown as UserModel);
   }
 
   async findByUsername(username: string): Promise<UserDto | null> {
@@ -46,19 +48,22 @@ export class UserRepository implements IUserRepository {
       return null;
     }
 
-    return this.mapToDto(user);
+    return mapUserModelToUserDto(user as unknown as UserModel);
   }
 
-  private mapToDto(user: Model): UserDto {
-    const userData = user.toJSON() as any;
-    return {
-      id: userData.id,
-      username: userData.username,
-      email: userData.email,
-      isActive: userData.is_active,
-      isBanned: userData.is_banned,
-      hasAcceptedTermsAndConditions: userData.has_accepted_terms_and_conditions,
-      roles: userData.roles?.map((role: any) => role.label) || [],
-    };
+  async createUser(userData: RegisterRequest, options?: { transaction?: Transaction }): Promise<UserModel> {
+
+    const { username, email, password, has_accepted_terms_and_conditions } = userData;
+    
+    const user = await User.create({
+      username,
+      email,
+      password,
+      has_accepted_terms_and_conditions,
+    }, {
+      transaction: options?.transaction,
+    });
+
+    return user as unknown as UserModel;
   }
 }

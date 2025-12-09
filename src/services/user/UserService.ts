@@ -1,4 +1,4 @@
-import { UserDto } from "../../dto/user/User.dto";
+import { UserDto, UserModel } from "../../dto/user/User.dto";
 import { CustomError } from "../../utils/CustomError";
 import jwt from 'jsonwebtoken';
 import { IUserService } from "../interfaces/IUserService";
@@ -31,5 +31,10 @@ export class UserService implements IUserService {
         }
     
         return await bcrypt.compare(password, user.get('password') as string);
-      }
+    }
+
+    public async hashPassword(password: string): Promise<string> {
+        const salt = await bcrypt.genSalt(10);
+        return await bcrypt.hash(password, salt);
+    }
 }
