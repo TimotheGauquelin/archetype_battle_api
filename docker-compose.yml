@@ -30,6 +30,7 @@ services:
       - CLOUDINARY_CLOUD_NAME=dqfuwqmql
       - CLOUDINARY_API_KEY=797713558548426
       - CLOUDINARY_API_SECRET=a9ct3UXKhQ3fECdRgUufmP0Mcv0
+      - BCRYPT_SALT_ROUNDS=10
     volumes:
       - ./config:/usr/src/config
       - ./database:/usr/src/database

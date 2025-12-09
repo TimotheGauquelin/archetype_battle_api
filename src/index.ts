@@ -1,7 +1,8 @@
 import express, { Express } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import { ErrorHandler } from './middlewares/errorHandler.js';
+import authRoutes from './routes/AuthRoute';
+import { errorHandler } from './middlewares/errorHandler';
 
 dotenv.config();
 
@@ -30,11 +31,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', apiRouter);
 
+apiRouter.use('/auth', authRoutes);
+
 app.get('/health', (_req, res) => {
   res.status(200).json({ message: 'API is running', status: 'ok' });
 });
 
-// app.use(ErrorHandler);
+app.use(errorHandler);
 
 export default app;
 

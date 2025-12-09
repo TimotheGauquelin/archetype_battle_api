@@ -4,68 +4,8 @@ import bcrypt from 'bcryptjs';
 import pkg from 'jsonwebtoken';
 import { CustomError } from '../utils/CustomError.js';
 const { sign } = pkg;
-/**
- * User model representing application users
- * @class User
- * @extends {Model}
- */
-class User extends Model {
 
-    static async validPassword(userPassword, password, next) {
-        try {
-            return await bcrypt.compare(password, userPassword);
-        } catch (error) {
-            next(error);
-        }
-    }
-
-    static async emailAlreadyUsed(email, next) {
-        try {
-            const user = await User.findOne({
-                where: {
-                    email: email
-                }
-            });
-
-            if (user) {
-                throw new CustomError('Email already used', 400);
-            }
-
-            return false;
-
-        } catch (error) {
-            next(error);
-        }
-    }
-
-    static async generateToken(user, next) {
-        try {
-            const { id, email, username, roles } = user;
-
-            const roleLabels = roles ? roles.map(role => role.label) : [];
-
-            const payload = {
-                id,
-                email,
-                username,
-                roles: roleLabels
-            };
-
-            return sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' });
-
-        } catch (error) {
-            next(error);
-        }
-    }
-
-    static async validateToken(token, next) {
-        try {
-            return pkg.verify(token, process.env.JWT_SECRET);
-        } catch (error) {
-            next(error);
-        }
-    }
-}
+class User extends Model {}
 
 User.init({
     id: {
@@ -137,17 +77,10 @@ User.init({
         beforeCreate: async (user) => {
             if (user.get('password')) {
                 const salt = await bcrypt.genSalt(10);
-                const hashedPassword = await bcrypt.hash(user.get('password'), salt);
+                const hashedPassword = bcrypt.hash(user.get('password'), salt);
                 user.set('password', hashedPassword);
             }
         },
-        beforeUpdate: async (user) => {
-            if (user.changed('password')) {
-                const salt = await bcrypt.genSalt(10);
-                const hashedPassword = await bcrypt.hash(user.get('password'), salt);
-                user.set('password', hashedPassword);
-            }
-        }
     }
 });
 
