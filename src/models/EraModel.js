@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/Sequelize.js';
+import sequelize from '../../config/Sequelize';
 
 /**
  * Era model representing the period in which the archetype was created

@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/Sequelize.js';
+import sequelize from '../../config/Sequelize';
 import bcrypt from 'bcryptjs';
 import pkg from 'jsonwebtoken';
 import { CustomError } from '../utils/CustomError.js';
@@ -75,9 +75,10 @@ User.init({
     underscored: true,
     hooks: {
         beforeCreate: async (user) => {
-            if (user.get('password')) {
+            const password = user.get('password');
+            if (password) {
                 const salt = await bcrypt.genSalt(10);
-                const hashedPassword = bcrypt.hash(user.get('password'), salt);
+                const hashedPassword = await bcrypt.hash(password, salt);
                 user.set('password', hashedPassword);
             }
         },

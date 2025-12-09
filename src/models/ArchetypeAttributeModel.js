@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/Sequelize';
+import sequelize from '../../config/Sequelize';
 
 /**
  * Model representing an attribute inside an archetype

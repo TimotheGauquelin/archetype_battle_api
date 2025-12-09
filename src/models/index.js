@@ -1,5 +1,5 @@
-import sequelize from '../config/Sequelize.js';
-import './associations.js';
+import sequelize from '../../config/Sequelize';
+import './associations';
 
 // Function to synchronize the database
 export const syncDatabase = async (force = false) => {
