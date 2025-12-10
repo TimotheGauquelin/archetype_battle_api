@@ -1,0 +1,111 @@
+<!-- src/mailing/templates/waitingApproval.html -->
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription en attente d'approbation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 24px;
+            background: #f4f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #222
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .06);
+            padding: 32px
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px
+        }
+
+        .logo img {
+            max-width: 160px;
+            height: auto
+        }
+
+        h2 {
+            margin: 0 0 16px;
+            font-size: 22px;
+            line-height: 1.3;
+            color: #1f2937;
+            text-align: center
+        }
+
+        .content {
+            margin-top: 8px
+        }
+
+        p {
+            margin: 0 0 12px;
+            line-height: 1.6;
+            color: #374151
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #eef2f7;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0
+        }
+
+        .highlight {
+            color: #d14343;
+            font-weight: 700
+        }
+
+        .footer {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 12px
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://res.cloudinary.com/dqfuwqmql/image/upload/v1761127958/archetype_battle_logo_cpcssf.png"
+                alt="Archetype Battle">
+        </div>
+
+        <h2>Inscription réussie ! Votre compte est en attente d'approbation</h2>
+
+        <div class="content">
+            <p>Bonjour <strong>{{username}}</strong>,</p>
+            <div class="card">
+                <p><span class="highlight">Félicitations ! Vous êtes bien Inscrit. Votre compte est en attente
+                        d’approbation par un administrateur.</span></p>
+                <p>Vous recevrez un email dès que votre compte sera validé.</p>
+            </div>
+            <p>L'équipe d'Archetype Battle</p>
+        </div>
+
+        <div class="footer">
+            <p>Cet email a été envoyé automatiquement, merci de ne pas y répondre.</p>
+            <p>&copy; 2025 Archetype Battle. Tous droits réservés.</p>
+        </div>
+    </div>
+</body>
+
+</html>

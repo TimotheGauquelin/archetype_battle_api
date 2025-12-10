@@ -7,12 +7,14 @@ import { RegisterRequest } from '../dto/auth/Register.dto';
 import { UserDto, UserModel } from '../dto/user/User.dto';
 import sequelize from '../../config/Sequelize';
 import { mapUserModelToUserDto } from '../map/user';
+import { EmailService } from './mailing/EmailService';
 
 
 export class AuthService implements IAuthService {
   constructor(
     private userRepository: IUserRepository,
-    private userService: IUserService
+    private userService: IUserService,
+    private emailService: EmailService
   ) { }
 
   async login(user: UserDto, loginData: LoginRequest): Promise<LoginResponse> {
@@ -69,6 +71,7 @@ export class AuthService implements IAuthService {
         { transaction }
       );
 
+      await this.emailService.sendWaitingApprovalEmail(user as unknown as UserModel);
 
       await transaction.commit();
 

@@ -25,6 +25,7 @@ services:
       - DATABASE_SSL=false
       - API_TOKEN_SALT=baATgxx9waBHIYkwv87lWg==
       - JWT_SECRET=SOTYvW+Ed63I2iCfehnBbg==
+      - EMAIL_SERVICE=gmail
       - EMAIL_FROM_EMAILSENDER=timothegauquelin@gmail.com
       - PASSWORD_FROM_EMAILSENDER=cpygwfgxyvyaumps
       - CLOUDINARY_CLOUD_NAME=dqfuwqmql
