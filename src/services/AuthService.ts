@@ -17,13 +17,13 @@ export class AuthService implements IAuthService {
 
   async login(user: UserDto, loginData: LoginRequest): Promise<LoginResponse> {
 
-    const isValidPassword = this.userService.verifyPassword(
+    const isValidPassword = await this.userService.verifyPassword(
       loginData.password,
       user.id
     );
 
     if (!isValidPassword) {
-      throw new CustomError('Invalid email or password', 401);
+      throw new CustomError('Email ou mot de passe incorrect', 401);
     }
 
     const token = this.userService.generateUserToken(user);
@@ -51,6 +51,12 @@ export class AuthService implements IAuthService {
       if (existingUser) {
         await transaction.rollback();
         throw new CustomError('Un utilisateur avec cet email existe déjà', 400);
+      }
+
+      const existingUsername = await this.userRepository.findByUsername(username);
+      if (existingUsername) {
+        await transaction.rollback();
+        throw new CustomError('Un utilisateur avec ce nom d\'utilisateur existe déjà', 400);
       }
 
       const user = await this.userRepository.createUser(

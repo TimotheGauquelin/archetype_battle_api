@@ -27,10 +27,11 @@ export class UserService implements IUserService {
         const user = await User.findByPk(userId);
     
         if (!user || !user.get('password')) {
-          return false;
+          throw new CustomError('Utilisateur non trouvé', 404);
         }
     
-        return await bcrypt.compare(password, user.get('password') as string);
+        const isValidPassword = await bcrypt.compare(password, user.get('password') as string);
+        return isValidPassword;
     }
 
     public async hashPassword(password: string): Promise<string> {
