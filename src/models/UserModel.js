@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../../config/Sequelize';
 import bcrypt from 'bcryptjs';
 import pkg from 'jsonwebtoken';
-import { CustomError } from '../utils/CustomError.js';
+import { CustomError } from '../utils/CustomError';
 const { sign } = pkg;
 
 class User extends Model {}

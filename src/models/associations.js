@@ -17,13 +17,11 @@ import ArchetypeType from './ArchetypeTypeModel';
 import ArchetypeAttribute from './ArchetypeAttributeModel';
 import ArchetypeSummonMechanic from './ArchetypeSummonMechanicModel';
 
-// Relations Banlist
 Banlist.hasMany(BanlistArchetypeCard, {
     foreignKey: 'banlist_id',
     as: 'banlist_cards'
 });
 
-// Relations BanlistArchetypeCard
 BanlistArchetypeCard.belongsTo(Banlist, {
     foreignKey: 'banlist_id',
     as: 'banlist'
@@ -44,7 +42,6 @@ BanlistArchetypeCard.belongsTo(CardStatus, {
     as: 'card_status'
 });
 
-// Relations Card
 Card.belongsTo(Attribute, {
     foreignKey: 'attribute_id',
     as: 'attribute'
@@ -70,7 +67,6 @@ Card.hasMany(BanlistArchetypeCard, {
     as: 'banlist_entries'
 });
 
-// Relations Deck
 Deck.belongsTo(User, {
     foreignKey: 'user_id',
     as: 'user'
@@ -86,7 +82,6 @@ Deck.hasMany(DeckCard, {
     as: 'deck_cards'
 });
 
-// Relations DeckCard
 DeckCard.belongsTo(Deck, {
     foreignKey: 'deck_id',
     as: 'deck'
@@ -97,7 +92,6 @@ DeckCard.belongsTo(Card, {
     as: 'card'
 });
 
-// Relations User
 User.hasMany(Deck, {
     foreignKey: 'user_id',
     as: 'decks'
@@ -110,7 +104,6 @@ User.belongsToMany(Role, {
     as: 'roles'
 });
 
-// Relations Role
 Role.belongsToMany(User, {
     through: UserRole,
     foreignKey: 'role_id',
@@ -118,7 +111,6 @@ Role.belongsToMany(User, {
     as: 'users'
 });
 
-// Relations Archetype
 Archetype.belongsTo(Era, {
     foreignKey: 'era_id',
     as: 'era'
@@ -134,37 +126,31 @@ Archetype.hasMany(BanlistArchetypeCard, {
     as: 'banlist_entries'
 });
 
-// Relations Era
 Era.hasMany(Archetype, {
     foreignKey: 'era_id',
     as: 'archetypes'
 });
 
-// Relations Attribute
 Attribute.hasMany(Card, {
     foreignKey: 'attribute_id',
     as: 'cards'
 });
 
-// Relations Type
 Type.hasMany(Card, {
     foreignKey: 'type_id',
     as: 'cards'
 });
 
-// Relations CardType
 CardType.hasMany(Card, {
     foreignKey: 'card_type_id',
     as: 'cards'
 });
 
-// Relations CardStatus
 CardStatus.hasMany(BanlistArchetypeCard, {
     foreignKey: 'card_status_id',
     as: 'banlist_entries'
 });
 
-// Associations ArchetypeType
 Archetype.hasMany(ArchetypeType, {
     foreignKey: 'archetype_id',
     as: 'archetype_types'
@@ -182,7 +168,6 @@ ArchetypeType.belongsTo(Type, {
     as: 'type'
 });
 
-// Associations ArchetypeAttribute
 Archetype.hasMany(ArchetypeAttribute, {
     foreignKey: 'archetype_id',
     as: 'archetype_attributes'
@@ -200,7 +185,6 @@ ArchetypeAttribute.belongsTo(Attribute, {
     as: 'attribute'
 });
 
-// Associations ArchetypeSummonMechanic
 Archetype.hasMany(ArchetypeSummonMechanic, {
     foreignKey: 'archetype_id',
     as: 'archetype_summon_mechanics'

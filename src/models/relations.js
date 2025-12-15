@@ -17,11 +17,9 @@ import Role from './RoleModel.js';
 import UserRole from './UserRoleModel.js';
 import WebsiteActions from './WebsiteActionsModel.js';
 
-// Relations User
 User.hasMany(Deck, { foreignKey: 'user_id' });
 Deck.belongsTo(User, { foreignKey: 'user_id' });
 
-// Relations User-Role (Many-to-Many)
 User.belongsToMany(Role, {
     through: UserRole,
     foreignKey: 'user_id',
@@ -33,7 +31,6 @@ Role.belongsToMany(User, {
     as: 'Users'
 });
 
-// Relations Deck
 Deck.hasMany(DeckCard, {
     foreignKey: 'deck_id',
     as: 'deck_cards'
@@ -43,7 +40,6 @@ DeckCard.belongsTo(Deck, {
     as: 'deck'
 });
 
-// Relations Card
 Card.hasMany(DeckCard, {
     foreignKey: 'card_id',
     as: 'deck_cards'
@@ -53,11 +49,9 @@ DeckCard.belongsTo(Card, {
     as: 'card'
 });
 
-// Relations Archetype
 Archetype.belongsTo(Era, { foreignKey: 'era_id', as: 'era' });
 Era.hasMany(Archetype, { foreignKey: 'era_id' });
 
-// Relations ArchetypeType
 Type.belongsToMany(Archetype, {
     through: 'archetype_type',
     foreignKey: 'type_id',
@@ -73,7 +67,6 @@ Archetype.belongsToMany(Type, {
     as: 'types'
 });
 
-// Relations ArchetypeAttribute
 Attribute.belongsToMany(Archetype, {
     through: 'archetype_attribute',
     foreignKey: 'attribute_id',
@@ -89,7 +82,6 @@ Archetype.belongsToMany(Attribute, {
     as: 'attributes'
 });
 
-// Relations ArchetypeSummonMechanic
 SummonMechanic.belongsToMany(Archetype, {
     through: 'archetype_summonmechanic',
     foreignKey: 'summonmechanic_id',
@@ -105,7 +97,6 @@ Archetype.belongsToMany(SummonMechanic, {
     as: 'summon_mechanics'
 });
 
-// Relations BanlistArchetypeCard
 Banlist.hasMany(BanlistArchetypeCard, {
     foreignKey: 'banlist_id',
     as: 'banlist_archetype_cards'
@@ -115,17 +106,15 @@ BanlistArchetypeCard.belongsTo(Banlist, {
     as: 'banlist'
 });
 
-// Relations Archetype et BanlistArchetypeCard
 Archetype.hasMany(BanlistArchetypeCard, {
     foreignKey: 'archetype_id',
-    as: 'cards'  // ✅ On peut utiliser 'cards' maintenant
+    as: 'cards'
 });
 BanlistArchetypeCard.belongsTo(Archetype, {
     foreignKey: 'archetype_id',
     as: 'archetype'
 });
 
-// Relations Card et BanlistArchetypeCard
 Card.hasMany(BanlistArchetypeCard, {
     foreignKey: 'card_id',
     as: 'banlist_archetype_cards'
@@ -135,7 +124,6 @@ BanlistArchetypeCard.belongsTo(Card, {
     as: 'card'
 });
 
-// Relations CardStatus et BanlistArchetypeCard
 CardStatus.hasMany(BanlistArchetypeCard, {
     foreignKey: 'card_status_id',
     as: 'banlist_archetype_cards'
