@@ -1,29 +1,26 @@
 import sequelize from '../../config/Sequelize';
 import './associations';
 
-// Function to synchronize the database
 export const syncDatabase = async (force = false) => {
     try {
         await sequelize.sync({ force });
-        console.log('Base de données synchronisée avec succès');
+        console.info('Database synchronized successfully');
     } catch (error) {
-        console.error('Erreur lors de la synchronisation de la base de données:', error);
+        console.error('Error synchronizing the database:', error);
         throw error;
     }
 };
 
-// Function to test the connection to the database
 export const testConnection = async () => {
     try {
         await sequelize.authenticate();
-        console.log('Connexion à la base de données établie avec succès');
+        console.info('Database connection established successfully');
     } catch (error) {
-        console.error('Impossible de se connecter à la base de données:', error);
+        console.error('Error connecting to the database:', error);
         throw error;
     }
 };
 
-// Export the models
 export {
     User,
     Role,

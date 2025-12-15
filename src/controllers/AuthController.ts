@@ -52,7 +52,6 @@ export default class AuthController {
 
       res.status(200).json({
         message: "Vous êtes connecté !",
-        success: true,
         data: result,
       });
     } catch (error) {
@@ -83,7 +82,6 @@ export default class AuthController {
       await this.authService.register(registerData);
 
       res.status(201).json({
-        success: true,
         message: "Inscription réussie",
       });
 

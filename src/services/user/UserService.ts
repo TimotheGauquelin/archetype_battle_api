@@ -1,4 +1,4 @@
-import { UserDto, UserModel } from "../../dto/user/User.dto";
+import { UserDto } from "../../dto/user/User.dto";
 import { CustomError } from "../../utils/CustomError";
 import jwt from 'jsonwebtoken';
 import { IUserService } from "../interfaces/IUserService";

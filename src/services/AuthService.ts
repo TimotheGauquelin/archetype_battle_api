@@ -78,8 +78,11 @@ export class AuthService implements IAuthService {
       return mapUserModelToUserDto(user as unknown as UserModel);
 
     } catch (error) {
-      if (transaction && !transaction.finished) {
-        await transaction.rollback();
+      if (transaction) {
+        try {
+          await transaction.rollback();
+        } catch (rollbackError) {
+        }
       }
       throw error;
     }
